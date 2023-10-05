@@ -9,8 +9,10 @@ class RoundedButton extends StatelessWidget {
     required this.iconData,
     this.left,
     this.right,
+    this.show = true,
   });
   final double bottom;
+  final bool show;
   final double? left;
   final double? right;
   final VoidCallback onTap;
@@ -21,12 +23,19 @@ class RoundedButton extends StatelessWidget {
       bottom: bottom,
       left: left,
       right: right,
-      child: FloatingActionButton(
-        backgroundColor: context.themeData.colorScheme.primary,
-        onPressed: onTap,
-        child: Icon(
-          iconData,
-          color: context.themeData.colorScheme.secondary,
+      child: AnimatedOpacity(
+        opacity: show ? 1.0 : 0.0,
+        duration: const Duration(milliseconds: 200),
+        child: IgnorePointer(
+          ignoring: !show,
+          child: FloatingActionButton(
+            backgroundColor: context.themeData.colorScheme.primary,
+            onPressed: onTap,
+            child: Icon(
+              iconData,
+              color: context.themeData.colorScheme.secondary,
+            ),
+          ),
         ),
       ),
     );

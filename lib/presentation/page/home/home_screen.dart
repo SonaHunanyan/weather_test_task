@@ -102,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   RoundedButton(
+                    show: _counter < 10,
                     bottom: 100 * rh(context),
                     right: 10 * rw(context),
                     onTap: () {
@@ -116,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     iconData: Icons.add,
                   ),
                   RoundedButton(
+                    show: _counter > 0,
                     bottom: 20 * rh(context),
                     right: 10 * rw(context),
                     onTap: () {

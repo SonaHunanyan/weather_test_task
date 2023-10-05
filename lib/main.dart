@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_test_task/data/constant/preference_key.dart';
+import 'package:weather_test_task/data/http/dio.dart';
 import 'package:weather_test_task/data/local_storage/shared_prefs.dart';
 import 'package:weather_test_task/presentation/extension/bloc_observer.dart';
 import 'package:weather_test_task/presentation/model/theme_type.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
 
 Future<void> _init() async {
   WidgetsFlutterBinding.ensureInitialized();
+  initDio();
   Bloc.observer = AppBlocObserver();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await setupDependencies();

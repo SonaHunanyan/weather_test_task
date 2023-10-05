@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_test_task/domain/model/weather/weather.dart';
 import 'package:weather_test_task/presentation/model/theme_type.dart';
 import 'package:weather_test_task/presentation/page/home/bloc/home_bloc.dart';
 import 'package:weather_test_task/presentation/page/home/bloc/home_event.dart';
@@ -20,11 +22,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _counter = 0;
-  String? _weatherInfo;
+  Weather? _weatherInfo;
 
-  final _bloc = HomeBloc();
+  final _bloc = HomeBloc(
+    locationService: GetIt.I.get(),
+    weatherRepository: GetIt.I.get(),
+  );
 
   late ThemeProvider _themeProvider;
+
+  @override
+  void initState() {
+    _bloc.add(RequestPermissionEvent());
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -50,6 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is ThemeChangedState) {
             _themeProvider.themeType = state.theme;
           }
+          if (state is WeatherLoadedState) {
+            _weatherInfo = state.weather;
+          }
         },
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) => Scaffold(
@@ -71,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding:
                             EdgeInsets.symmetric(horizontal: 50 * rw(context)),
                         child: Text(
-                          _weatherInfo ?? '',
+                          _weatherInfo?.temp.toString() ?? '',
                           style: context.themeData.textTheme.titleLarge,
                         ),
                       ),
@@ -129,7 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   RoundedButton(
                     bottom: 100 * rh(context),
                     left: 10 * rw(context),
-                    onTap: () {},
+                    onTap: () {
+                      _bloc.add(GetWeatherEvent());
+                    },
                     iconData: Icons.cloud,
                   ),
                 ],

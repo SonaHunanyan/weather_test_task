@@ -24,3 +24,7 @@ class ChangeThemeEvent extends HomeEvent {
   ChangeThemeEvent({required this.prevTheme});
   final ThemeType? prevTheme;
 }
+
+class GetWeatherEvent extends HomeEvent {}
+
+class RequestPermissionEvent extends HomeEvent {}

@@ -73,7 +73,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return;
       }
       final weather = await weatherRepository.getWeather(country: country);
-      emit(WeatherLoadedState(weather: weather));
+      emit(WeatherLoadedState(weather: weather, country: country));
     } catch (e) {
       emit(
         FailToLoadWeatherState(

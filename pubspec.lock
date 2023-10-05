@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.2"
+  conversion_units:
+    dependency: "direct main"
+    description:
+      name: conversion_units
+      sha256: "758c4b3ce32e291f1a2f3ba0ae00e16c0bb0c3a04a6742e3e042ac0ca804a7c2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   convert:
     dependency: transitive
     description:

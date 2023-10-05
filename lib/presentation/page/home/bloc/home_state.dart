@@ -25,8 +25,12 @@ class ThemeChangedState extends HomeState {
 }
 
 class WeatherLoadedState extends HomeState {
-  WeatherLoadedState({required this.weather});
+  WeatherLoadedState({
+    required this.weather,
+    required this.country,
+  });
   final Weather weather;
+  final String country;
   @override
   List<Object?> get props => [weather.temp];
 }

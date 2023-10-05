@@ -8,6 +8,7 @@ import 'package:weather_test_task/presentation/page/home/bloc/home_bloc.dart';
 import 'package:weather_test_task/presentation/page/home/bloc/home_event.dart';
 import 'package:weather_test_task/presentation/page/home/bloc/home_state.dart';
 import 'package:weather_test_task/presentation/page/home/widgets/rounded_button.dart';
+import 'package:weather_test_task/presentation/page/home/widgets/tempreture_widget.dart';
 import 'package:weather_test_task/presentation/provider/theme_provider.dart';
 import 'package:weather_test_task/presentation/theme/app_strings.dart';
 import 'package:weather_test_task/presentation/theme/app_theme.dart';
@@ -23,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _counter = 0;
   Weather? _weatherInfo;
+  String? _country;
 
   final _bloc = HomeBloc(
     locationService: GetIt.I.get(),
@@ -63,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (state is WeatherLoadedState) {
             _weatherInfo = state.weather;
+            _country = state.country;
           }
         },
         child: BlocBuilder<HomeBloc, HomeState>(
@@ -81,13 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 50 * rw(context)),
-                        child: Text(
-                          _weatherInfo?.temp.toString() ?? '',
-                          style: context.themeData.textTheme.titleLarge,
-                        ),
+                      TempretureWidget(
+                        weather: _weatherInfo,
+                        coutry: _country,
                       ),
                       SizedBox(
                         height: 20 * rh(context),
